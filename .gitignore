@@ -1,0 +1,16 @@
+media/**
+!media/.gitkeep
+accounts/migrations/**
+administration/migrations/**
+donation/migrations/**
+membership/migrations/**
+dashboard/migrations/**
+finance/migrations/**
+reports/migrations/**
+files/migrations/**
+*.pyc
+!__init__.cpython-38.pyc
+!__init__.py
+!__pycache__/
+db.sqlite3
+.env
