@@ -8,7 +8,7 @@
 <div class="card">
     <div class="card-body">
 
-        <h4 class="header-title">Buttons example</h4>
+        <h4 class="header-title">{{table_title}}</h4>
         <div id="datatable-buttons_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
             <div class="row">
                 <div class="col-sm-12 col-md-6">
@@ -33,23 +33,35 @@
                         aria-describedby="datatable-buttons_info" style="width: 1011px;">
                         <thead>
                             <tr>
-                                <th class="sorting" tabindex="0" aria-controls="datatable-buttons" rowspan="1"
-                                    colspan="1" style="width: 154.4px;"
-                                    aria-label="Name: activate to sort column ascending">Name</th>
+                                <th>SNo.</th>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>Kigango</th>
+                                <th>Created At</th>
+                                <th>Action</th>
 
                             </tr>
                         </thead>
 
 
                         <tbody>
+                            
+                            {% for data in kanda  %}
+
                             <tr class="odd">
-                                <td class="dtr-control" tabindex="0">Airi Satou</td>
-                                <td style="">Accountant</td>
-                                <td class="sorting_1" style="">Tokyo</td>
-                                <td style="">33</td>
-                                <td style="">2008/11/28</td>
-                                <td style="display: none;">$162,700</td>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{data.name}}</td>
+                                <td>{{data.address}}</td>
+                                <td>{{data.kigango}}</td>
+                                <td>
+                                    <<a href="" class="jsgrid-button jsgrid-edit-button" type="button"></a> 
+                                </td>
+                            
                             </tr>
+                                
+                            {% endfor %}
+                                
+                           
 
                         </tbody>
                     </table>

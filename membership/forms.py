@@ -1,4 +1,5 @@
 from django import forms
+from .models import Kanda,Kigango
 
 
 #forms start here
@@ -6,7 +7,7 @@ from django import forms
 class KandaForm(forms.ModelForm):
     """Form definition for Kanda."""
 
-    kanda =  block_no = forms.ModelChoiceField(label="Kanda", queryset=Kanda.objects.all())
+    kigango = forms.ModelChoiceField(label="Kigango", queryset=Kigango.objects.all())
 
     class Meta:
         """Meta definition for Kandaform."""

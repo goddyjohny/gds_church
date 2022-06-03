@@ -2,9 +2,24 @@ from django.db import models
 
 # Create your models here.
 
+class Parish(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self) -> str:
+        return self.name
+
+
 
 class Kigango(models.Model):
     name = models.CharField(max_length=50)
+    address = models.CharField(max_length=50)
+    parish = models.ForeignKey(Parish, on_delete=models.CASCADE)
+    created_at = models.DateField(auto_now=True)
+    updated_at = models.DateField()
+
+    def __str__(self) -> str:
+        return self.name
+
 
 class Kanda(models.Model):
     name = models.CharField(max_length=50, unique=True)
