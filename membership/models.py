@@ -15,7 +15,7 @@ class Kigango(models.Model):
     address = models.CharField(max_length=50)
     parish = models.ForeignKey(Parish, on_delete=models.CASCADE)
     created_at = models.DateField(auto_now=True)
-    updated_at = models.DateField()
+    updated_at = models.DateField(auto_now=True)
 
     def __str__(self) -> str:
         return self.name
@@ -26,7 +26,7 @@ class Kanda(models.Model):
     address = models.CharField(max_length=50)
     kigango = models.ForeignKey(Kigango, on_delete=models.CASCADE)
     created_at = models.DateField(auto_now=True)
-    updated_at = models.DateField()
+    updated_at = models.DateField(auto_now=True)
 
     def __str__(self) -> str:
         return self.name
@@ -37,7 +37,7 @@ class Fellowship(models.Model):
     address = models.CharField(max_length=50)
     kigango = models.ForeignKey(Kigango, on_delete=models.CASCADE)
     created_at = models.DateField(auto_now=True)
-    updated_at = models.DateField()
+    updated_at = models.DateField(auto_now=True)
 
     def __str__(self) -> str:
         return self.name
@@ -51,7 +51,7 @@ class Family(models.Model):
     ndoa = models.BooleanField('ndoa',default=False)
     is_active = models.BooleanField('active',default=True)
     created_at = models.DateField(auto_now=True)
-    updated_at = models.DateField()
+    updated_at = models.DateField(auto_now=True)
 
     def __str__(self) -> str:
         return self.name
@@ -68,7 +68,7 @@ class Member(models.Model):
     is_baptized = models.BooleanField('baptized', default=False)
     is_active = models.BooleanField('active', default=True)
     created_at = models.DateField(auto_now=True)
-    updated_at = models.DateField()
+    updated_at = models.DateField(auto_now=True)
 
     def __str__(self) -> str:
         return self.fullname
