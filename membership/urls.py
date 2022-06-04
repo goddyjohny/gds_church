@@ -13,5 +13,9 @@ urlpatterns = [
 
     path("add-fellowship/", views.add_fellowship, name="add-fellowship"),
     path("update-fellowship/<str:id>", views.update_fellowship, name="update-fellowship"),
+
+    path("list-family/", views.list_family, name="list-family"),
+    path("add-family/", views.add_family, name="add-family"),
+    path("update-family/<str:id>", views.update_family, name="update-family"),
     
 ]

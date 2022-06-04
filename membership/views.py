@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import Kanda,Kigango, Fellowship
-from .forms import KandaForm, KigangoForm, FellowshipForm
+from .models import Kanda,Kigango, Fellowship, Family
+from .forms import KandaForm, KigangoForm, FellowshipForm, FamilyForm
 
 
 # Create your views here.
@@ -242,6 +242,98 @@ def update_fellowship(request,id):
     }    
 
     return render(request, template, context)
+
+
+
+
+
+
+
+    # Femily
+
+def add_family(request):
+    template = 'demography/family/add.html'
+    title = 'Add Family'
+    page_title = 'Familia'
+
+    # register form and path request post
+
+    form = FamilyForm(request.POST or None)
+
+    #Check if the form is valid
+
+    if form.is_valid():
+        # creating model objbect for saving
+
+        family_obj = form.save(commit=False)
+
+        #save to DB
+        family_obj.save()
+        messages.success(request, "Family is Added successfully")
+        return redirect('list-family')
+
+    context = {
+        'form':form,
+        'title':title,
+        'page_title':page_title
+    }    
+
+    return render(request, template, context)
+
+
+
+
+def update_family(request,id):
+
+    template = 'demography/family/add.html'
+    title = 'Add Family'
+    page_title = 'Familia'
+
+    # get the object to be edited
+
+    family_id = get_object_or_404(Family,pk=id)
+
+    # set the editable one to form
+    form = FamilyForm(request.POST or None, instance=family_id)
+
+    if form.is_valid():
+        # creating model objbectb for saving
+
+        family_obj = form.save(commit=False)
+
+        #save to DB
+        family_obj.save()
+        messages.success(request, "Family is Updated successfully")
+        return redirect('list-family')
+
+
+    context = {
+        'form':form,
+        'title':title,
+        'page_title':page_title
+    }    
+
+    return render(request, template, context)
+
+
+def list_family(request):
+    template = 'demography/family/list.html'
+    table_title = 'List Of Family'
+    page_title = 'Familia'
+
+    #return all family from DB
+
+    family = Family.objects.all()
+
+    context = {
+        'table_title':table_title,
+        'page_title':page_title,
+        'family':family
+    }    
+
+    return render(request, template, context)
+
+
 
 
 

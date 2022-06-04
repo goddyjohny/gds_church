@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title">{{page_title}}</h4>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-12">
+<div class="col-lg-2 mb-2">
+    <a href="{% url 'add-family' %}" type="button" class="btn btn-lg font-16 btn-primary w-100"><i
+            class="mdi mdi-plus-circle-outline"></i> Add Family</a>
+
+</div> <!-- end col-->
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    
+                    <div class="col-lg-12">
+
+
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h4 class="header-title">{{table_title}}</h4>
+
+
+                                <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
+                                    <thead>
+                                        <tr>
+                                            <th>SNo.</th>
+                                            <th>Name</th>
+                                            <th>Phone</th>
+                                            <th>Address</th>
+                                            <th>Jumuiya</th>
+                                            <th>Ndoa</th>
+                                            <th>Created At</th>
+                                            <th>Action</th>
+
+                                        </tr>
+                                    </thead>
+
+
+                                    <tbody>
+                                        {% for data in family  %}
+
+                                        <tr class="odd">
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{data.name}}</td>
+                                            <td>{{data.phone}}</td>
+                                            <td>{{data.address}}</td>
+                                            <td>{{data.fellowship}}</td>
+                                            <td>{{data.ndoa|yesno:"Wanandoa,Sio Wanandoa"}}</td>
+                                            <td>{{data.created_at}}</td>
+                                            <td>
+                                                <a href="{% url 'update-family' data.id %}"
+                                                    class="jsgrid-button jsgrid-edit-button" type="button"><i
+                                                        class="fe-edit"></i></a>
+                                            </td>
+
+                                        </tr>
+
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+
+                            </div> <!-- end card body-->
+                        </div> <!-- end card -->
+
+
+                    </div> <!-- end col -->
+
+                </div> <!-- end row -->
+            </div> <!-- end card body-->
+        </div> <!-- end card -->
+
+
+    </div>
+    <!-- end col-12 -->
+</div> <!-- end row -->
+
+
+
+
+{% endblock content %}
+
+
+
+
+
+
+
+
