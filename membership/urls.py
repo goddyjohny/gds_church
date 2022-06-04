@@ -9,5 +9,9 @@ urlpatterns = [
 
     path("add-kigango/", views.add_kigango, name="add-kigango"),
     path("update-kigango/<str:id>", views.update_kigango, name="update-kigango"),
+
+
+    path("add-fellowship/", views.add_fellowship, name="add-fellowship"),
+    path("update-fellowship/<str:id>", views.update_fellowship, name="update-fellowship"),
     
 ]

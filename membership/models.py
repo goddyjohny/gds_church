@@ -35,7 +35,7 @@ class Kanda(models.Model):
 class Fellowship(models.Model):
     name = models.CharField(max_length=50, unique=True)
     address = models.CharField(max_length=50)
-    kigango = models.ForeignKey(Kigango, on_delete=models.CASCADE)
+    kanda = models.ForeignKey(Kanda, on_delete=models.CASCADE)
     created_at = models.DateField(auto_now=True)
     updated_at = models.DateField(auto_now=True)
 

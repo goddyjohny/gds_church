@@ -1,15 +1,19 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import Kanda,Kigango
-from .forms import KandaForm, KigangoForm
+from .models import Kanda,Kigango, Fellowship
+from .forms import KandaForm, KigangoForm, FellowshipForm
+
 
 # Create your views here.
 
+
+#Kigango
 
 def add_kigango(request):
     template = 'demography/kigango/add.html'
     title = 'Add Kigango'
     table_title = 'List Of Kigango'
+    page_title = 'Kigango'
 
     # register form and path request post
 
@@ -34,7 +38,8 @@ def add_kigango(request):
         'form':form,
         'title':title,
         'table_title':table_title,
-        'kigango':kigango
+        'kigango':kigango,
+        'page_title':page_title
     }    
 
     return render(request, template, context)
@@ -47,6 +52,7 @@ def update_kigango(request,id):
     template = 'demography/kigango/add.html'
     title = 'Add Kigango'
     table_title = 'List Of Kigango'
+    page_title = 'Kigango'
 
     # get the object to be edited
 
@@ -72,19 +78,21 @@ def update_kigango(request,id):
         'form':form,
         'title':title,
         'table_title':table_title,
-        'kigango':kigango
+        'kigango':kigango,
+        'page_title':page_title
     }    
 
     return render(request, template, context)
 
 
 
-
+# Kanda
 
 def add_kanda(request):
     template = 'demography/kanda/add.html'
     title = 'Add Kanda'
     table_title = 'List Of Kanda'
+    page_title = 'Kanda'
 
     # register form and path request post
 
@@ -109,7 +117,8 @@ def add_kanda(request):
         'form':form,
         'title':title,
         'table_title':table_title,
-        'kanda':kanda
+        'kanda':kanda,
+        'page_title':page_title
     }    
 
     return render(request, template, context)
@@ -122,6 +131,7 @@ def update_kanda(request,id):
     template = 'demography/kanda/add.html'
     title = 'Add Kanda'
     table_title = 'List Of Kanda'
+    page_title = 'Kanda'
 
     # get the object to be edited
 
@@ -147,10 +157,94 @@ def update_kanda(request,id):
         'form':form,
         'title':title,
         'table_title':table_title,
-        'kanda':kanda
+        'kanda':kanda,
+        'page_title':page_title
+        
     }    
 
     return render(request, template, context)
+
+
+
+# Fellowship
+
+def add_fellowship(request):
+    template = 'demography/fellowship/add.html'
+    title = 'Add Fellowship'
+    table_title = 'List Of Fellowship'
+    page_title = 'Jumuiya'
+
+    # register form and path request post
+
+    form = FellowshipForm(request.POST or None)
+
+    #Check if the form is valid
+
+    if form.is_valid():
+        # creating model objbect for saving
+
+        fellowship_obj = form.save(commit=False)
+
+        #save to DB
+        fellowship_obj.save()
+        messages.success(request, "Fellowship is Added successfully")
+        return redirect('add-fellowship')
+
+    # list all kanda
+    fellowship = Fellowship.objects.all()
+
+    context = {
+        'form':form,
+        'title':title,
+        'table_title':table_title,
+        'fellowship':fellowship,
+        'page_title':page_title
+    }    
+
+    return render(request, template, context)
+
+
+
+
+def update_fellowship(request,id):
+
+    template = 'demography/fellowship/add.html'
+    title = 'Add Fellowship'
+    table_title = 'List Of Fellowship'
+    page_title = 'Jumuiya'
+
+    # get the object to be edited
+
+    fellowship_id = get_object_or_404(Fellowship,pk=id)
+
+    # set the editable one to form
+    form = FellowshipForm(request.POST or None, instance=fellowship_id)
+
+    if form.is_valid():
+        # creating model objbectb for saving
+
+        fellowship_obj = form.save(commit=False)
+
+        #save to DB
+        fellowship_obj.save()
+        messages.success(request, "Fellowship is Updated successfully")
+        return redirect('add-fellowship')
+
+    # list all kanda
+    fellowship = Fellowship.objects.all()
+
+    context = {
+        'form':form,
+        'title':title,
+        'table_title':table_title,
+        'fellowship':fellowship,
+        'page_title':page_title
+    }    
+
+    return render(request, template, context)
+
+
+
 
 
 
