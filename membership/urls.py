@@ -17,5 +17,11 @@ urlpatterns = [
     path("list-family/", views.list_family, name="list-family"),
     path("add-family/", views.add_family, name="add-family"),
     path("update-family/<str:id>", views.update_family, name="update-family"),
+
+
+    path("list-member/", views.list_member, name="list-member"),
+    path("add-member/", views.add_member, name="add-member"),
+    path("update-member/<str:id>", views.update_member, name="update-member"),
+    path("member-details/<str:id>", views.member_details, name="member-details"),
     
 ]

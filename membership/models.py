@@ -61,6 +61,7 @@ class Member(models.Model):
     family = models.ForeignKey(Family, on_delete=models.CASCADE)
     fullname = models.CharField(max_length=100)
     birthdate = models.DateField()
+    gender = models.CharField(max_length=8)
     phone = models.CharField(max_length=10, null=True)
     address = models.TextField()
     age_status = models.CharField(max_length=100)

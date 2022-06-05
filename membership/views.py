@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import Kanda,Kigango, Fellowship, Family
-from .forms import KandaForm, KigangoForm, FellowshipForm, FamilyForm
+from .models import Kanda,Kigango, Fellowship, Family, Member
+from .forms import KandaForm, KigangoForm, FellowshipForm, FamilyForm, MemberForm
 
 
 # Create your views here.
@@ -332,6 +332,118 @@ def list_family(request):
     }    
 
     return render(request, template, context)
+
+
+
+
+
+# Members
+
+def add_member(request):
+    template = 'demography/member/add.html'
+    title = 'Taarifa za Muumini'
+    page_title = 'Waumini'
+
+    # register form
+
+    form = MemberForm(request.POST or None)
+
+    #Check if the form is valid
+    if form.is_valid():
+
+        #create object for the model
+
+        member_obj = form.save(commit=False)
+
+        #Save Data to DB
+
+        member_obj.save()
+
+        messages.success(request, "Member is Added Successfully")
+       
+
+    context = {
+        'title':title,
+        'page_title':page_title,
+        'form':form
+    } 
+    
+    return render(request, template, context)
+
+
+
+def update_member(request,id):
+    template = 'demography/member/add.html'
+    title = 'Taarifa za Muumini'
+    page_title = 'Waumini'
+
+    # get the specific object to be edited
+
+    member_id = get_object_or_404(Member,pk=id)
+
+    # return object data to form for edit
+
+    form = MemberForm(request.POST or None, instance=member_id)
+
+
+    # Check the validity of the form
+
+    if form.is_valid():
+
+        # create object for saving data to DB
+        member_obj = form.save(commit=False)
+      
+        # Save the object to DB
+        member_obj.save()
+        messages.success(request, "Member is successfully Updated")
+        return redirect('list-member')
+
+    context = {
+        'title':title,
+        'page_title':page_title,
+        'form':form
+    } 
+    
+    return render(request, template, context)    
+
+
+
+def member_details(request,id):
+    template = 'demography/member/view.html'
+    page_title = 'Taarifa za Muumini'
+
+    # get the details of particular member
+
+    member_id = get_object_or_404(Member,pk=id)
+
+    context = {
+        'page_title':page_title,
+        'member_id':member_id
+    } 
+
+    return render(request, template, context)
+
+
+
+
+def list_member(request):
+    template = 'demography/member/list.html'
+    table_title = 'List Of Members'
+    page_title = 'Waumini'
+
+    member = Member.objects.all()
+
+    context = {
+        'table_title':table_title,
+        'page_title':page_title,
+        'member':member
+    } 
+
+    return render(request, template, context)
+
+
+    
+
 
 
 

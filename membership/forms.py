@@ -1,5 +1,5 @@
 from django import forms
-from .models import Kanda,Kigango, Parish,Fellowship, Family
+from .models import Kanda,Kigango, Parish,Fellowship, Family, Member
 
 
 #forms start here
@@ -53,4 +53,49 @@ class FamilyForm(forms.ModelForm):
         """Meta definition for Familyform."""
 
         model = Family
-        fields = ('name','address','fellowship','phone','ndoa')             
+        fields = ('name','address','fellowship','phone','ndoa')     
+
+
+class MemberForm(forms.ModelForm):
+    """Form definition for Member."""
+    gender_options = {
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+    } 
+
+    agestatus_options = {
+        ('Wawaka', 'Wawata'),
+        ('Wawata', 'Wawata'),
+        ('Walei', 'Walei'),
+        ('Kiwawa', 'Kiwawa'),
+        ('Utoto Mtakatifu', 'Utoto Mtakatifu'),
+    }
+
+    marital_options = {
+        ('Mwanandoa', 'Mwanandoa'),
+        ('Uchumba', 'Uchumba'),
+        ('Single', 'Single'),
+        ('Mtoto', 'Mtoto'),
+    }
+
+
+    family = forms.ModelChoiceField(label="Familia aliyopo", queryset=Family.objects.all())
+    gender = forms.CharField(label='Jinsia', widget=forms.Select(choices=gender_options, attrs={'class': 'form-control'}))
+    age_status = forms.CharField(label='Kikundi', widget=forms.Select(choices=agestatus_options, attrs={'class': 'form-control'}))
+    marital_status = forms.CharField(label='Mahusiano', widget=forms.Select(choices=marital_options, attrs={'class': 'form-control'}))
+    is_baptized = forms.BooleanField(label='Umebatizwa? (Weka Tiki Kama Umepata Ubatizo)',widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}), required=False)
+    phone = forms.CharField(required=False)
+    address = forms.CharField(widget=forms.Textarea(attrs={'rows':2}))
+
+    class Meta:
+        """Meta definition for Memberform."""
+
+        model = Member
+        fields = ('fullname','birthdate','gender','phone','family','age_status','marital_status','address','is_baptized')
+
+        widgets = {
+        'birthdate': forms.DateInput(format=('%m/%d/%Y'), attrs={'class':'form-control', 'placeholder':'Select a date', 'type':'date'}),
+    }
+
+
+
