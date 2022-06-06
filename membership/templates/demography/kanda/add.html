@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title">{{page_title}}</h4>
+        </div>
+    </div>
+</div>
+
+{% include "alert.html" %}
+
+<div class="row mt-3">
+
+    <div class="col-4">
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title">{{title}}</h4>
+
+                <form method="post" action="#" class="form parsley-examples" novalidate>
+
+                    {% csrf_token %}
+
+                    {% for hidden in form.hidden_fields %}
+                         {{ hidden }}
+                    {% endfor %}
+
+
+                    {% for field in form.visible_fields %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}<span class="text-danger">*</span></label>
+                        {{ field|add_class:'form-control' }}
+                        {% for error in field.errors %}
+                            <ul class="parsley-errors-list filled" id="parsley-id-27" aria-hidden="false">
+                                <li class="parsley-required">{{ error }}</li>
+                            </ul>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+
+                    <div class="text-end">
+                        <button  type="submit"  class="btn btn-primary waves-effect waves-light" >Submit</button>
+                       
+                    </div>
+                </form>
+            </div>
+        </div> <!-- end card -->
+    </div>
+
+
+    <div class="col-8" id="kanda-result">
+
+        {% include "demography/kanda/list.html" %}
+
+
+    </div><!-- end col-->
+
+
+
+</div>
+    
+{% endblock content %}
+    

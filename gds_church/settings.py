@@ -37,10 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'widget_tweaks',
     # My Apps
     'dashboard',
     'membership',
+    # Installed Apps
+    'widget_tweaks',
 
 ]
 

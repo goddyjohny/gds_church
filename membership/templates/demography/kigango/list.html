@@ -1,0 +1,65 @@
+
+
+
+
+{% block content %}
+
+
+<div class="card">
+    <div class="card-body">
+
+        <h4 class="header-title">{{table_title}}</h4>
+
+
+        <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
+            <thead>
+                <tr>
+                    <th>SNo.</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Parish</th>
+                    <th>Created At</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+
+
+            <tbody>
+                {% for data in kigango  %}
+
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{data.name}}</td>
+                    <td>{{data.address}}</td>
+                    <td>{{data.parish}}</td>
+                    <td>{{data.created_at}}</td>
+                    <td>
+                        <a href="{% url 'membership:update-kigango' data.id %}" class="jsgrid-button jsgrid-edit-button"
+                            type="button"><i class="fe-edit"></i></a>
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div> <!-- end card body-->
+</div> <!-- end card -->
+
+
+    
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+<!-- end row-->
+
+    

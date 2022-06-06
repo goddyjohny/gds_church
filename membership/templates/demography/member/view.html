@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title">{{page_title}}</h4>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title mb-3">Personal Information</h4>
+
+                <h5 class="font-family-primary fw-semibold">{{member_id.fullname}}</h5>
+
+                <p class="mb-2"><span class="fw-semibold me-2">Birth Date:</span>{{member_id.birthdate}}</p>
+                <p class="mb-2"><span class="fw-semibold me-2">Address:</span>{{member_id.address}}</p>
+                <p class="mb-2"><span class="fw-semibold me-2">Phone:</span> {{member_id.phone}}</p>
+                
+
+            </div>
+        </div>
+    </div> <!-- end col -->
+
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title mb-3">Family Information</h4>
+
+                <ul class="list-unstyled mb-0">
+                    <li>
+                        <p class="mb-2"><span class="fw-semibold me-2">Name:</span> {{member_id.family.name}}</p>
+                        <p class="mb-2"><span class="fw-semibold me-2">Phone</span> {{member_id.family.phone}}</p>
+                        <p class="mb-2"><span class="fw-semibold me-2">Adress:</span> {{member_id.family.address}}</p>
+                       
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div> <!-- end col -->
+
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title mb-3">Church Concerning Information</h4>
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <p class="mb-2"><span class="fw-semibold me-2">Kikundi:</span> {{member_id.age_status}}</p>
+                            <p class="mb-2"><span class="fw-semibold me-2">Mahusiano:</span> {{member_id.marital_status}}</p>
+                            <p class="mb-2"><span class="fw-semibold me-2">Ubatizo:</span> {{member_id.is_baptized|yesno:"Kabatizwa,Hajabatizwa"}}</p>
+                            <p class="mb-2"><span class="fw-semibold me-2">Jumuiya:</span> {{member_id.family.fellowship.name}}</p>
+                            <p class="mb-2"><span class="fw-semibold me-2">Kigango:</span> {{member_id.family.fellowship.kanda.kigango.name}}</p>
+
+                        </li>
+                    </ul>
+
+            </div>
+        </div>
+    </div> <!-- end col -->
+
+</div>
+
+
+
+{% endblock content %}
