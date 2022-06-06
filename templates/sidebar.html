@@ -89,17 +89,20 @@
 
                 <li>
                     <a href="#sidebarEcommerce" data-bs-toggle="collapse">
-                        <i data-feather="shopping-cart"></i>
-                        <span> Ecommerce </span>
+                        <i data-feather="users"></i>
+                        <span> Membership </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="sidebarEcommerce">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="ecommerce-dashboard.html">Dashboard</a>
+                                <a href="{% url 'membership:list_dioceses' %}">Diocese</a>
                             </li>
+                             <li>
+                                 <a href="{% url 'membership:list_deacons' %}">Deacon</a>
+                             </li>
                             <li>
-                                <a href="ecommerce-products.html">Products</a>
+                                <a href="{% url 'membership:list_parishes' %}">Parishes</a>
                             </li>
                             <li>
                                 <a href="ecommerce-product-detail.html">Product Detail</a>

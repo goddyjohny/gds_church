@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     # My Apps
     'dashboard',
     'membership',
+    # Installed Apps
+    'widget_tweaks',
 
 ]
 
