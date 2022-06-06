@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+
+            </div>
+            <h4 class="page-title">Edit Parish</h4>
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title">Update Parish</h4>
+                <p class="sub-header">
+
+                </p>
+                <form action="" method="post">
+                    {% csrf_token%}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-floating mb-3">
+                                {{form.deacon|add_class:"form-select"}}
+                                <label for="floatingSelect">Deacon</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                {{form.name|add_class:"form-control"|attr:"placeholder:Name"}}
+                                <label for="floatingInput">Name</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                {{form.address|add_class:"form-control"|attr:"placeholder:Address"}}
+                                <label for="floatingInput">Address</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">Update</button>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

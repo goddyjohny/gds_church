@@ -31,7 +31,8 @@
                 <td>{{data.kanda}}</td>
                 <td>{{data.created_at}}</td>
                 <td>
-                    <a href="{% url 'update-fellowship' data.id %}" class="jsgrid-button jsgrid-edit-button" type="button"><i
+                    <a href="{% url 'membership:update-fellowship' data.id %}" class="jsgrid-button jsgrid-edit-button"
+                        type="button"><i
                             class="fe-edit"></i></a>
                 </td>
             

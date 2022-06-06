@@ -1,8 +1,9 @@
 from django.contrib import admin
-from .models import Parish,Kigango,Kanda,Fellowship,Family,Member
+from .models import *
 
 # Register your models here.
-
+admin.site.register(Diocese)
+admin.site.register(Deacon)
 admin.site.register(Parish)
 admin.site.register(Kigango)
 admin.site.register(Kanda)

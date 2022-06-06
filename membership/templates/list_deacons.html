@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <!-- <form class="d-flex align-items-center mb-3">
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control border" id="dash-daterange">
+                        <span class="input-group-text bg-blue border-blue text-white">
+                            <i class="mdi mdi-calendar-range"></i>
+                        </span>
+                    </div>
+                    <a href="javascript: void(0);" class="btn btn-blue btn-sm ms-2">
+                        <i class="mdi mdi-autorenew"></i>
+                    </a>
+                    <a href="javascript: void(0);" class="btn btn-blue btn-sm ms-1">
+                        <i class="mdi mdi-filter-variant"></i>
+                    </a>
+                </form> -->
+            </div>
+            <h4 class="page-title">Deacons</h4>
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-2">
+                    <h4 class="header-title">List Deacons</h4>
+                    <a href="{% url 'membership:add_deacon' %}" class="btn btn-primary waves-effect waves-light">
+                        <span class="btn-label"><i class=" fas fa-plus"></i></span>Deacon
+                    </a>
+                </div>
+
+             
+
+                <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Diocese</th>
+                            <th>Created at</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+                        {% for deacon in deacons %}
+                           <tr>
+                               <td>{{forloop.counter}}</td>
+                               <td>{{deacon.name}}</td>
+                               <td>{{deacon.address}}</td>
+                               <td>{{deacon.diocese}}</td>
+
+                               <td>{{deacon.created_at}}</td>
+                               <td><a href="{% url 'membership:edit_deacon' id=deacon.id %}"
+                                       class="btn btn-blue waves-effect waves-light"><i
+                                           class="far fa-edit"></i></a></td>
+                           </tr>
+                        {% endfor %}
+                      
+                       
+                    </tbody>
+                </table>
+
+            </div> <!-- end card body-->
+        </div> <!-- end card -->
+    </div><!-- end col-->
+</div>
+<!-- end row-->
+{% endblock content %}

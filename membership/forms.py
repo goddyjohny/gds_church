@@ -1,12 +1,8 @@
 from django import forms
-from .models import Kanda,Kigango, Parish,Fellowship, Family, Member
+from .models import *
 
 
 #forms start here
-
-
-
-
 class KigangoForm(forms.ModelForm):
     """Form definition for Kigango."""
 
@@ -99,3 +95,22 @@ class MemberForm(forms.ModelForm):
 
 
 
+class DioceseForm(forms.ModelForm):
+
+    class Meta:
+        model = Diocese
+        fields = '__all__'
+
+
+class DeaconForm(forms.ModelForm):
+    
+    class Meta:
+        model = Deacon
+        fields = '__all__'
+
+
+class ParishForm(forms.ModelForm):
+
+    class Meta:
+        model = Parish
+        fields = '__all__'
