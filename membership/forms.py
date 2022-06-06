@@ -90,7 +90,7 @@ class MemberForm(forms.ModelForm):
         fields = ('fullname','birthdate','gender','phone','family','age_status','marital_status','address','is_baptized')
 
         widgets = {
-        'birthdate': forms.DateInput(format=('%m/%d/%Y'), attrs={'class':'form-control', 'placeholder':'Select a date', 'type':'date'}),
+        'birthdate': forms.DateInput(format=('%Y-%m-%d'), attrs={'class':'form-control', 'placeholder':'Select a date', 'type':'date'}),
     }
 
 
