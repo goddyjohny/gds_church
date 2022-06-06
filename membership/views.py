@@ -29,7 +29,7 @@ def add_kigango(request):
         messages.success(request, "Kigango is Added successfully")
         return redirect('membership:add-kigango')
 
-    # list all kanda
+    # list all kigango
     kigango = Kigango.objects.all()
 
     context = {
@@ -428,6 +428,7 @@ def add_diocese(request):
         form = DioceseForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Diocese is successfully Added")
             return redirect('membership:list_dioceses')
         else:
             print(form.errors)
@@ -448,6 +449,7 @@ def edit_diocese(request, *args, **kwargs):
         form = DioceseForm(request.POST, instance=diocese)
         if form.is_valid():
             form.save()
+            messages.success(request, "Diocese is successfully Updated")
             return redirect('membership:list_dioceses')
         else:
             print(form.errors)
@@ -476,6 +478,7 @@ def add_deacon(request):
         form = DeaconForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Deacon is successfully Added")
             return redirect('membership:list_deacons')
         else:
             print(form.errors)
@@ -496,6 +499,7 @@ def edit_deacon(request, *args, **kwargs):
         form = DeaconForm(request.POST, instance=deacon)
         if form.is_valid():
             form.save()
+            messages.success(request, "Deacon is successfully Updated")
             return redirect('membership:list_deacons')
         else:
             print(form.errors)
@@ -524,6 +528,7 @@ def add_parish(request):
         form = ParishForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Parish is successfully Added")
             return redirect('membership:list_parishes')
         else:
             print(form.errors)
@@ -545,6 +550,7 @@ def edit_parish(request, *args, **kwargs):
         form = ParishForm(request.POST, instance=parish)
         if form.is_valid():
             form.save()
+            messages.success(request, "Parish is successfully Updated")
             return redirect('membership:list_parishes')
         else:
             print(form.errors)
