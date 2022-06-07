@@ -44,7 +44,7 @@ class FamilyForm(forms.ModelForm):
 
     fellowship = forms.ModelChoiceField(label="Jumuiya", queryset=Fellowship.objects.all())
     ndoa = forms.BooleanField(label='Wanandoa (Weka Tiki Kama Wanandoa)',widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}), required=False)
-
+    address = forms.CharField(widget=forms.Textarea(attrs={'rows':2}))
     class Meta:
         """Meta definition for Familyform."""
 
