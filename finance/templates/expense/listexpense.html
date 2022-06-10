@@ -64,14 +64,29 @@
                                             <td>{{data.description}}</td>
                                             <td>{{data.amount}}</td>
                                             <td>{{data.created_at}}</td>
+                                            {% if data.is_debited == True %}
+
                                             <td>
-                                                <a href="{% url 'finance:update-expense' data.id %}"
-                                                    class="jsgrid-button jsgrid-edit-button" type="button"><i
+                                                <a href="{% url 'finance:update-expense' data.id %}" class="jsgrid-button jsgrid-edit-button" type="button" style="pointer-events: none"><i
                                                         class="fe-edit"></i></a>
-
-                                                <a href="{% url 'finance:debit-account' data.id %}" class="jsgrid-button jsgrid-edit-button" type="button">debit</a>
-
+                                            
+                                                <a href="{% url 'finance:debit-account' data.id %}" class="jsgrid-button jsgrid-edit-button" type="button" style="pointer-events: none">debit</a>
+                                            
                                             </td>
+                                              
+                                            {% else %}
+
+                                            <td>
+                                                <a href="{% url 'finance:update-expense' data.id %}" class="jsgrid-button jsgrid-edit-button" type="button"><i
+                                                        class="fe-edit"></i></a>
+                                            
+                                                <a href="{% url 'finance:debit-account' data.id %}" class="jsgrid-button jsgrid-edit-button" type="button">debit</a>
+                                            
+                                            </td>
+                                              
+                                            {% endif %}
+                                            
+                                            
 
                                         </tr>
 
