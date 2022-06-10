@@ -1,0 +1,64 @@
+{% block content %}
+
+
+<div class="card">
+    <div class="card-body">
+
+        <h4 class="header-title">{{table_title}}</h4>
+
+
+        <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
+            <thead>
+                <tr>
+                    <th>SNo.</th>
+                    <th>Name</th>
+                    <th>File</th>
+                    <th>Shared to</th>
+                    <th>Uploaded by</th>
+                    <th>Created At</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+
+
+            <tbody>
+                {% for data in document  %}
+
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{data.name}}</td>
+                    <td>{{data.files}}</td>
+                    <td>{{data.shared_users}}</td>
+                    <td>{{data.user}}</td>
+                    <td>{{data.created_at}}</td>
+                    <td>
+                        
+                        <a href="{{data.files.url}}" class="jsgrid-button jsgrid-edit-button"
+                            type="button"><i class="fe-download"></i></a>
+
+                    
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div> <!-- end card body-->
+</div> <!-- end card -->
+
+
+
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+<!-- end row-->

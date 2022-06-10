@@ -13,6 +13,7 @@
         </div>
     </div>
 </div>
+
 {% include "alert.html" %}
 
 <div class="row mt-3">
@@ -21,16 +22,9 @@
 
         <div class="card">
             <div class="card-body">
-             
+                <h4 class="header-title">{{title}}</h4>
 
-                <div class="d-flex justify-content-between mb-2">
-                    <h4 class="header-title">{{title}}</h4>
-                    <a href="{% url 'membership:list-family' %}" type="button" class="btn btn-primary waves-effect waves-light"><i
-                            class="fe-arrow-left"></i> Back</a>
-                
-                </div> <!-- end col-->
-
-                <form method="post" action="#" class="form parsley-examples" novalidate>
+                <form method="post" action="#" class="form parsley-examples" enctype="multipart/form-data" novalidate>
 
                     {% csrf_token %}
 
@@ -62,10 +56,20 @@
     </div>
 
 
-   
+
 
 
 
 </div>
+
+<div class="row mb-3">
+    <div class="col-12" id="kanda-result">
+
+        {% include "list.html" %}
+
+
+    </div><!-- end col-->
+</div>
+
 
 {% endblock content %}

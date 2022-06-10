@@ -1,35 +1,14 @@
-{% extends "base.html" %}
-{% load static %}
 {% load widget_tweaks %}
 
 
-
-{% block content %}
-
-<div class="row">
-    <div class="col-12">
-        <div class="page-title-box">
-            <h4 class="page-title">{{page_title}}</h4>
-        </div>
-    </div>
-</div>
-{% include "alert.html" %}
-
-<div class="row mt-3">
-
-    <div class="col-12">
-
-        <div class="card">
-            <div class="card-body">
-             
-
-                <div class="d-flex justify-content-between mb-2">
-                    <h4 class="header-title">{{title}}</h4>
-                    <a href="{% url 'membership:list-family' %}" type="button" class="btn btn-primary waves-effect waves-light"><i
-                            class="fe-arrow-left"></i> Back</a>
-                
-                </div> <!-- end col-->
-
+<div class="modal fade" id="custom-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h4 class="modal-title" id="myCenterModalLabel">{{title}}</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <div class="modal-body p-4">
                 <form method="post" action="#" class="form parsley-examples" novalidate>
 
                     {% csrf_token %}
@@ -58,14 +37,6 @@
                     </div>
                 </form>
             </div>
-        </div> <!-- end card -->
-    </div>
-
-
-   
-
-
-
-</div>
-
-{% endblock content %}
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

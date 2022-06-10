@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
 # Create your views here.
 
 
 # Kigango
-
+@login_required(login_url='accounts:login')
 def add_kigango(request):
     template = 'demography/kigango/add.html'
     title = 'Add Kigango'
@@ -42,7 +43,7 @@ def add_kigango(request):
 
     return render(request, template, context)
 
-
+@login_required(login_url='accounts:login')
 def update_kigango(request, id):
     template = 'demography/kigango/add.html'
     title = 'Add Kigango'
@@ -81,7 +82,7 @@ def update_kigango(request, id):
 
 
 # Kanda
-
+@login_required(login_url='accounts:login')
 def add_kanda(request):
     template = 'demography/kanda/add.html'
     title = 'Add Kanda'
@@ -117,7 +118,7 @@ def add_kanda(request):
 
     return render(request, template, context)
 
-
+@login_required(login_url='accounts:login')
 def update_kanda(request, id):
     template = 'demography/kanda/add.html'
     title = 'Add Kanda'
@@ -157,7 +158,7 @@ def update_kanda(request, id):
 
 
 # Fellowship
-
+@login_required(login_url='accounts:login')
 def add_fellowship(request):
     template = 'demography/fellowship/add.html'
     title = 'Add Fellowship'
@@ -193,7 +194,7 @@ def add_fellowship(request):
 
     return render(request, template, context)
 
-
+@login_required(login_url='accounts:login')
 def update_fellowship(request, id):
 
     template = 'demography/fellowship/add.html'
@@ -233,7 +234,7 @@ def update_fellowship(request, id):
 
 
 # Family
-
+@login_required(login_url='accounts:login')
 def add_family(request):
     template = 'demography/family/add.html'
     title = 'Add Family'
@@ -263,7 +264,7 @@ def add_family(request):
 
     return render(request, template, context)
 
-
+@login_required(login_url='accounts:login')
 def update_family(request, id):
 
     template = 'demography/family/add.html'
@@ -295,7 +296,7 @@ def update_family(request, id):
 
     return render(request, template, context)
 
-
+@login_required(login_url='accounts:login')
 def list_family(request):
     template = 'demography/family/list.html'
     table_title = 'List Of Family'
@@ -315,7 +316,7 @@ def list_family(request):
 
 
 # Members
-
+@login_required(login_url='accounts:login')
 def add_member(request):
     template = 'demography/member/add.html'
     title = 'Taarifa za Muumini'
@@ -346,7 +347,7 @@ def add_member(request):
 
     return render(request, template, context)
 
-
+@login_required(login_url='accounts:login')
 def update_member(request, id):
     template = 'demography/member/add.html'
     title = 'Taarifa za Muumini'
@@ -380,7 +381,7 @@ def update_member(request, id):
 
     return render(request, template, context)
 
-
+@login_required(login_url='accounts:login')
 def member_details(request, id):
     template = 'demography/member/view.html'
     page_title = 'Taarifa za Muumini'
@@ -396,7 +397,7 @@ def member_details(request, id):
 
     return render(request, template, context)
 
-
+@login_required(login_url='accounts:login')
 def list_member(request):
     template = 'demography/member/list.html'
     table_title = 'List Of Members'
@@ -414,6 +415,7 @@ def list_member(request):
 
 
 # Diocese
+@login_required(login_url='accounts:login')
 def list_dioceses(request):
     dioceses = Diocese.objects.all()
 
@@ -422,7 +424,7 @@ def list_dioceses(request):
     }
     return render(request, 'list_dioceses.html', context)
 
-
+@login_required(login_url='accounts:login')
 def add_diocese(request):
     if request.method == 'POST':
         form = DioceseForm(request.POST)
@@ -440,7 +442,7 @@ def add_diocese(request):
     }
     return render(request, 'add_diocese.html', context)
 
-
+@login_required(login_url='accounts:login')
 def edit_diocese(request, *args, **kwargs):
     id = kwargs.get('id')
     diocese = Diocese.objects.filter(id=id).first()
@@ -463,7 +465,7 @@ def edit_diocese(request, *args, **kwargs):
 
 # Deacon
 
-
+@login_required(login_url='accounts:login')
 def list_deacons(request):
     deacons = Deacon.objects.all()
 
@@ -472,7 +474,7 @@ def list_deacons(request):
     }
     return render(request, 'list_deacons.html', context)
 
-
+@login_required(login_url='accounts:login')
 def add_deacon(request):
     if request.method == 'POST':
         form = DeaconForm(request.POST)
@@ -490,7 +492,7 @@ def add_deacon(request):
     }
     return render(request, 'add_deacon.html', context)
 
-
+@login_required(login_url='accounts:login')
 def edit_deacon(request, *args, **kwargs):
     id = kwargs.get('id')
     deacon = Deacon.objects.filter(id=id).first()
@@ -513,7 +515,7 @@ def edit_deacon(request, *args, **kwargs):
 
 # Parish
 
-
+@login_required(login_url='accounts:login')
 def list_parishes(request):
     parishes = Parish.objects.all()
 
@@ -522,7 +524,7 @@ def list_parishes(request):
     }
     return render(request, 'list_parishes.html', context)
 
-
+@login_required(login_url='accounts:login')
 def add_parish(request):
     if request.method == 'POST':
         form = ParishForm(request.POST)
@@ -541,7 +543,7 @@ def add_parish(request):
     }
     return render(request, 'add_parish.html', context)
 
-
+@login_required(login_url='accounts:login')
 def edit_parish(request, *args, **kwargs):
     id = kwargs.get('id')
     parish = Parish.objects.filter(id=id).first()

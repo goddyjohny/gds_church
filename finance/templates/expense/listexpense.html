@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 {% load widget_tweaks %}
+
+
 {% block content %}
 
 <div class="row">
@@ -13,9 +15,10 @@
 
 
 
-<div class="row">
+<div class="row mt-3">
+    {% include "alert.html" %}
     <div class="col-12">
-       
+
 
         <div class="card">
             <div class="card-body">
@@ -27,13 +30,14 @@
                         <div class="card">
                             <div class="card-body">
 
-                                
+
 
                                 <div class="d-flex justify-content-between mb-2">
                                     <h4 class="header-title">{{table_title}}</h4>
-                                    <a href="{% url 'membership:add-member' %}" type="button" class="btn btn-primary waves-effect waves-light"><i
-                                            class="mdi mdi-plus-circle-outline"></i> Ongeza Muumini</a>
-                                
+                                    <a href="" type="button" class="btn btn-primary waves-effect waves-light"
+                                        data-bs-toggle="modal" data-bs-target="#custom-modal"><i
+                                            class="mdi mdi-plus-circle me-1"></i> Add Expense</a>
+
                                 </div> <!-- end col-->
 
 
@@ -41,15 +45,9 @@
                                     <thead>
                                         <tr>
                                             <th>SNo.</th>
-                                            <th>Full Name</th>
-                                            <th>Birthdate</th>
-                                            <th>Gender</th>
-                                            <th>Phone</th>
-                                            <th>Address</th>
-                                            <th>Kikundi</th>
-                                            <th>Mahusiano</th>
-                                            <th>Familia</th>
-                                            <th>Ubatizo</th>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Amount</th>
                                             <th>Created At</th>
                                             <th>Action</th>
 
@@ -58,28 +56,21 @@
 
 
                                     <tbody>
-                                        {% for data in member  %}
+                                        {% for data in expense  %}
 
                                         <tr>
                                             <td>{{forloop.counter}}</td>
-                                            <td>{{data.fullname}}</td>
-                                            <td>{{data.birthdate}}</td>
-                                            <td>{{data.gender}}</td>
-                                            <td>{{data.phone}}</td>
-                                            <td>{{data.address}}</td>
-                                            <td>{{data.age_status}}</td>
-                                            <td>{{data.marital_status}}</td>
-                                            <td>{{data.family.name}}</td>
-                                            <td>{{data.is_baptized|yesno:"Kabatizwa,Hajabatizwa"}}</td>
+                                            <td>{{data.name}}</td>
+                                            <td>{{data.description}}</td>
+                                            <td>{{data.amount}}</td>
                                             <td>{{data.created_at}}</td>
                                             <td>
-                                                <a href="{% url 'membership:update-member' data.id %}"
+                                                <a href="{% url 'finance:update-expense' data.id %}"
                                                     class="jsgrid-button jsgrid-edit-button" type="button"><i
                                                         class="fe-edit"></i></a>
 
-                                                <a href="{% url 'membership:member-details' data.id %}"
-                                                    class="jsgrid-button jsgrid-edit-button" type="button"><i
-                                                        class="fe-eye"></i></a>
+                                                <a href="{% url 'finance:debit-account' data.id %}" class="jsgrid-button jsgrid-edit-button" type="button">debit</a>
+
                                             </td>
 
                                         </tr>
@@ -102,6 +93,9 @@
     </div>
     <!-- end col-12 -->
 </div> <!-- end row -->
+
+
+{% include "expense/add.html" %}
 
 
 

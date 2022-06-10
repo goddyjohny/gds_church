@@ -20,16 +20,19 @@
 
     <div class="col-12">
 
-        <div class="col-lg-3 mb-2">
-            <a href="{% url 'membership:list-member' %}" type="button" class="btn btn-lg font-16 btn-primary w-100"><i
-                    class="fe-people"></i> Orodha Ya Waumini</a>
-        
-        </div> <!-- end col-->
+       
 
 
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title">{{title}}</h4>
+               
+
+                <div class="d-flex justify-content-between mb-2">
+                    <h4 class="header-title">{{title}}</h4>
+                    <a href="{% url 'membership:list-member' %}" type="button" class="btn btn-primary waves-effect waves-light"><i
+                            class="fe-arrow-left"></i> Back</a>
+                
+                </div> <!-- end col-->
 
                 <form method="post" action="#" class="form parsley-examples mt-3" novalidate>
 
