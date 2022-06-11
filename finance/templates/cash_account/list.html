@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block content %}
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+
+            </div>
+            <h4 class="page-title">{{page_title}}</h4>
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-2">
+                    <h4 class="header-title">{{table_title}}</h4>
+                    
+                </div>
+
+                <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Ref. No.</th>
+                            <th>Description</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                            <th>Balance</th>
+                            <th>Content Type</th>
+                            <th>Created at</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for acc in accounts %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{acc.ref_no}}</td>
+                            <td>{{acc.description}}</td>
+                            <td>TZS {{acc.debit|intcomma}}</td>
+                            <td>TZS {{acc.credit|intcomma}}</td>
+                            <td>TZS {{acc.balance|intcomma}}</td>
+                            <td>{{acc.content_type.name}}</td>
+                            <td>{{acc.created_at}}</td>
+                            <td>
+                                <!-- <a href="" class="waves-effect waves-light">
+                                    <i class="far fa-edit"></i>
+                                </a> -->
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+
+                    </tbody>
+                </table>
+
+            </div> <!-- end card body-->
+        </div> <!-- end card -->
+    </div><!-- end col-->
+</div>
+<!-- end row-->
+{% endblock content %}

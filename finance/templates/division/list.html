@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+
+            </div>
+            <h4 class="page-title">{{page_title}}</h4>
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+
+<div class="row">
+
+    <div class="col-xl-12">
+        <!-- sample modal content -->
+        <div id="pledge-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Offering Division Form</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="modal-body p-4">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="field-1" class="form-label">Kigango*</label>
+                                        {% render_field form.kigango class="form-control" placeholder="Kigango" %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="field-1" class="form-label">Parish*</label>
+                                        {% render_field form.parish class="form-control" placeholder="Parish" %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-2">
+                                        <label for="field-3" class="form-label">Diocese*</label>
+                                        {% render_field form.diocese class="form-control" placeholder="Diocese" %}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div><!-- /.modal -->
+
+    </div> <!-- end col -->
+    <div class="col-12">
+        {% include 'alert.html' %}
+
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-2">
+                    <h4 class="header-title">{{table_title}}</h4>
+                    <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
+                        data-bs-target="#pledge-close-modal">
+                        <span class="btn-label"><i class=" fas fa-plus"></i></span>Division
+                    </button>
+
+                </div>
+
+                <table id="basic-datatable" class="table table-striped dt-responsive nowrap w-100">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Kigango</th>
+                            <th>Parish</th>
+                            <th>Diocese</th>
+                            <th>Active</th>
+                            <th>Created at</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for div in divisions %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{div.kigango}}</td>
+                            <td>{{div.parish}}</td>
+                            <td>{{div.diocese}}</td>
+                            <td>
+                                <!-- {{div.active}} -->
+                                {% if div.active %}
+                                <h4 class="m-0 text-success">
+                                    <i class="mdi mdi-check-all"></i>
+                                </h4>
+                                {% else %}
+                                <h4 class="m-0 text-danger">
+                                    <i class="mdi mdi-close-circle-outline"></i>
+                                </h4>
+
+                                {% endif %}
+                            </td>
+                            <td>{{div.created_at}}</td>
+                            <td>
+
+                                {% if not div.active %}
+                                <a href="{% url 'finance:activate_offering_divisions' id=div.id %}"
+                                    class="btn btn-sm btn-success waves-effect waves-light">
+                                    <span class="btn-label"><i class="mdi mdi-check-all"></i></span>Activate
+                                </a>
+                                {% else %}
+                                <a href="" class="btn btn-sm btn-info waves-effect waves-light">
+                                    <span class="btn-label"><i class="mdi mdi-check-all"></i></span>Active
+                                </a>
+                                {% endif %}
+
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+
+            </div> <!-- end card body-->
+        </div> <!-- end card -->
+    </div><!-- end col-->
+</div>
+
+<!-- end row-->
+{% endblock content %}

@@ -511,9 +511,8 @@ def edit_deacon(request, *args, **kwargs):
     }
     return render(request, 'edit_deacon.html', context)
 
+
 # Parish
-
-
 def list_parishes(request):
     parishes = Parish.objects.all()
 
