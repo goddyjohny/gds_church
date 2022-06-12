@@ -22,6 +22,8 @@ urlpatterns = [
     path("update-deposit/<str:id>/", views.update_deposit, name="update-deposit"),
     path("credit-account/<str:id>/", views.deposit_credit, name="credit-account"),
 
+    path("list/cash/accounts", views.list_cash_accounts, name="list_cash_accounts"),
+
 
 
 

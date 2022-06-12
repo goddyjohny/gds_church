@@ -1,6 +1,7 @@
 from django.db import models
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.fields import GenericForeignKey
+from django.urls import reverse
 from django.contrib.auth.models import User
 
 
@@ -67,17 +68,29 @@ class Deposit(models.Model):
         return self.prop.name
 
 
-class CashAccount(models.Model): 
-    balance =  models.DecimalField(decimal_places=2, max_digits=10, default=0.00)  
-    updated_at = models.DateTimeField(auto_now=True)
+class CashAccount(models.Model):
+    ref_no = models.CharField(max_length=100)
+    description = models.TextField()
+    debit = models.DecimalField(max_digits=19, decimal_places=2, default=0)
+    credit = models.DecimalField(max_digits=19, decimal_places=2, default=0)
+    balance = models.DecimalField(max_digits=19, decimal_places=2, default=0)
+    # Below the mandatory fields for generic relation
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey()
     created_at = models.DateTimeField(auto_now_add=True)
-    
+    updated_at = models.DateTimeField(auto_now=True)
 
-    # def __str__(self):
-    #     return decimal(self.balance)
+    class Meta:
+        ordering = ['-pk']
+        verbose_name = "Cash Account"
+        verbose_name_plural = "Cash Accounts"
 
-    def balance_float(self):
-        return float(self.balance)     
+    def __str__(self):
+        return "{0}".format(self.ref_no,self.debit)
+
+    def get_absolute_url(self):
+        return reverse("CashAccount_detail", kwargs={"pk": self.pk}) 
 
 
 

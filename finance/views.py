@@ -1,4 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
+from decimal import Decimal
+from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.contrib import messages
@@ -377,67 +379,120 @@ def update_deposit(request, id):
         'page_title':page_title
     }
 
-    return render(request, template, context)        
+    return render(request, template, context)  
+   
+
+@login_required(login_url='accounts:login')
+def list_cash_accounts(request):
+    template = 'cash_account/list.html'
+    title = 'Cash Account'
+    page_title = 'Cash Account'
+    table_title = 'List Cash Account'
+
+    accounts = CashAccount.objects.all()
+
+    context = {
+        'accounts': accounts,
+        'title': title,
+        'page_title': page_title,
+        'table_title': table_title,
+
+    }
+    return render(request, template, context)
+
+
+@login_required(login_url='accounts:login')
+def debit_cash_account(Object, amount, description: str):
+    # Object is a content_object
+    # Get first cash account object
+    cash = CashAccount.objects.first()
+    # Get last balance
+    last_balance = cash.balance if cash else Decimal(0.0)
+    new_balance = last_balance + Decimal(amount)
+
+    CashAccount.objects.create(content_object=Object, ref_no=ref_no(
+        CashAccount), description=description, debit=amount, balance=new_balance)
+
+
+@login_required(login_url='accounts:login')
+def credit_cash_account(Object, description: str):
+    # Object is a content_object 
+    # Get first cash account object
+    cash = CashAccount.objects.first()
+    # Get last balance
+    last_balance = cash.balance if cash else Decimal(0.0)
+    new_balance = last_balance - Decimal(Object.amount)
+
+    CashAccount.objects.create(content_object=Object, ref_no=ref_no(
+        CashAccount), description=description, credit=Object.amount, balance=new_balance)            
 
 
 
 @login_required(login_url='accounts:login')
 def expense_debit(request, id):
-    balance = get_object_or_404(CashAccount,pk=1)
-
+    
     debit = get_object_or_404(Expense,pk=id)
-
-    if balance.balance > 0:
-        if debit.is_debited == False:
-
-            if balance.balance >= debit.amount:
-                balance.balance = balance.balance - debit.amount
-                balance.save()
-                debit.is_debited = True
-                debit.save()
-                messages.success(request,"The amount "+ str(debit.amount) +" is successfully debited from the Account")
-                return redirect('finance:expense')
-            else:  
-                messages.error(request,"Excuse the account balance is insufficient to debit "+ str(debit.amount))  
-                return redirect('finance:expense')
-        else:
-            messages.error(request,"This amount already debited")
-            return redirect('finance:expense')
-
-    else:
-        messages.error(request,"Excuse the account balance is "+str(balance.balance))  
-        return redirect('finance:expense')
+    credit_cash_account(
+                Object=debit, amount=debit.amount, description="Cash Expense withdrawn")
+    debit.is_debited = True
+    debit.save()
+    messages.success(request,"The amount "+ str(debit.amount) +" is successfully debited from the Account")
+    return redirect('finance:expense')
 
 
+    # if balance.balance > 0:
+    #     if debit.is_debited == False:
 
+    #         if balance.balance >= debit.amount:
+    #             balance.balance = balance.balance - debit.amount
+    #             balance.save()
+    #             debit.is_debited = True
+    #             debit.save()
+    #             messages.success(request,"The amount "+ str(debit.amount) +" is successfully debited from the Account")
+    #             return redirect('finance:expense')
+    #         else:  
+    #             messages.error(request,"Excuse the account balance is insufficient to debit "+ str(debit.amount))  
+    #             return redirect('finance:expense')
+    #     else:
+    #         messages.error(request,"This amount already debited")
+    #         return redirect('finance:expense')
+
+    # else:
+    #     messages.error(request,"Excuse the account balance is "+str(balance.balance))  
+    #     return redirect('finance:expense')
+
+
+@login_required(login_url='accounts:login')
 def deposit_credit(request, id):
-    balance = get_object_or_404(CashAccount,pk=1)
-
+   
     credit = get_object_or_404(Deposit,pk=id)
+    debit_cash_account(
+                Object=credit, amount=credit.amount, description="Cash added")
+    credit.is_credited = True   
+    credit.save()   
+    messages.success(request,"The amount "+ str(credit.amount) +" is successfully credited to the Account")
+    return redirect('finance:deposit')      
 
-    if balance.balance >= 0:
-        if credit.is_credited == False:
+    # if balance.balance >= 0:
+    #     if credit.is_credited == False:
 
-            balance.balance = balance.balance + credit.amount
-            balance.save()
-            credit.is_credited = True
-            credit.save()
-            messages.success(request,"The amount "+ str(credit.amount) +" is successfully credited to the Account")
-            return redirect('finance:deposit')
-        else:
-            messages.error(request,"This amount already credited")
-            return redirect('finance:deposit')
+    #         balance.balance = balance.balance + credit.amount
+    #         balance.save()
+    #         credit.is_credited = True
+    #         credit.save()
+    #         messages.success(request,"The amount "+ str(credit.amount) +" is successfully credited to the Account")
+    #         return redirect('finance:deposit')
+    #     else:
+    #         messages.error(request,"This amount already credited")
+    #         return redirect('finance:deposit')
 
  
-    else:
-        messages.error(request,"Something Wrong ") 
-        return redirect('finance:deposit')
+    # else:
+    #     messages.error(request,"Something Wrong ") 
+    #     return redirect('finance:deposit')
 
 
-def get_balance(request):
-    balance = get_object_or_404(CashAccount,id=1)
 
-    return render(request, index.html, {'balance':balance})
     
 
          
