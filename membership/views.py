@@ -516,6 +516,10 @@ def edit_deacon(request, *args, **kwargs):
 # Parish
 
 @login_required(login_url='accounts:login')
+
+
+# Parish
+
 def list_parishes(request):
     parishes = Parish.objects.all()
 

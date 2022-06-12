@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% load humanize %}
+{% block content %}
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+
+            </div>
+            <h4 class="page-title">{{page_title}}</h4>
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+
+<div class="row">
+    <div class="col-xl-12">
+        <!-- sample modal content -->
+
+        <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Contribution Form</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="modal-body p-4">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="field-1" class="form-label">Name</label>
+                                        {% render_field form.name class="form-control" placeholder="Name" %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="field-2" class="form-label">Description</label>
+                                        {% render_field form.description class="form-control" placeholder="Description" rows="3" %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-2">
+                                        <label for="field-3" class="form-label">Objective</label>
+                                        {% render_field form.objective class="form-control" placeholder="Description" rows="3" %}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <!-- <button type="button" class="btn btn-secondary waves-effect"
+                            data-bs-dismiss="modal">Close</button> -->
+                            <button type="submit" class="btn btn-info waves-effect waves-light">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div><!-- /.modal -->
+
+    </div> <!-- end col -->
+    <div class="col-12">
+        {% include 'alert.html' %}
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-2">
+                    <h4 class="header-title">{{table_title}}</h4>
+                    <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
+                        data-bs-target="#con-close-modal">
+                        <span class="btn-label"><i class=" fas fa-plus"></i></span>Contribution
+                    </button>
+
+                </div>
+
+                <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Ref. No.</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Objective</th>
+                            <th>Balance</th>
+                            <th>Created at</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for cont in contributions %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{cont.ref_no}}</td>
+                            <td>{{cont.name}}</td>
+                            <td>{{cont.description}}</td>
+                            <td>TZS {{cont.objective|intcomma}}</td>
+                            <td>TZS {{cont.balance|intcomma}}</td>
+                            <td>{{cont.created_at}}</td>
+                            <td>
+                                 <a href="{% url 'finance:view_contribution' id=cont.id %}"
+                                     class="waves-effect waves-light mx-2">
+                                     <i class="far fa-eye"></i>
+                                 </a>
+                                <a href="{% url 'finance:edit_contribution' id=cont.id %}" class="waves-effect waves-light">
+                                    <i class="far fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+
+                    </tbody>
+                </table>
+
+            </div> <!-- end card body-->
+        </div> <!-- end card -->
+    </div><!-- end col-->
+</div>
+<!-- end row-->
+{% endblock content %}
