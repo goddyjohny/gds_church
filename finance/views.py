@@ -696,8 +696,7 @@ def expense_debit(request, id):
 def deposit_credit(request, id):
    
     credit = get_object_or_404(Deposit,pk=id)
-    debit_cash_account(
-                Object=credit, amount=credit.amount, description="Cash added")
+    debit_cash_account(Object=credit, amount=credit.amount, description="Cash added")
     credit.is_credited = True   
     credit.save()   
     messages.success(request,"The amount "+ str(credit.amount) +" is successfully credited to the Account")

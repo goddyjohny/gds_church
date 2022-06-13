@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
+from membership.models import Member
 from django.contrib.auth.models import User
 
 
@@ -47,8 +48,11 @@ class Property(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-from membership.models import Member
-# Create your models here.
+    def __str__(self):
+        return self.name   
+
+
+
 
 
 class CashAccount(models.Model):
