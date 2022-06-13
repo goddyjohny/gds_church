@@ -74,6 +74,12 @@ class ContributionForm(forms.ModelForm):
 
 
 class CashContributionForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.contribution = kwargs.pop("contribution")
+        super(CashContributionForm, self).__init__(*args, **kwargs)
+        self.fields['pledger'].queryset = Pledge.objects.filter(
+            contribution=self.contribution)
+        self.fields['pledger'].empty_label = "Select Pledger"
     
     class Meta:
         model = CashContribution

@@ -12,7 +12,6 @@ from .models import *
 
 
 
-@login_required(login_url='accounts:login')
 def ref_no(Object):
     # Object refer to class name
     data = datetime.now()
@@ -90,7 +89,7 @@ def view_contribution(request, *args, **kwargs):
     contribution = Contribution.objects.filter(id=id).first()
     template = 'contribution/view.html'
     page_title = 'Contribution Details'
-    cash_form = CashContributionForm()
+    cash_form = CashContributionForm(contribution=contribution)
     pledge_form = PledgeForm()
 
     context = {
@@ -109,12 +108,12 @@ def add_cash_contribution(request, *args, **kwargs):
     contribution = Contribution.objects.filter(id=id).first()
 
     if request.method == 'POST':
-        form = CashContributionForm(request.POST)
+        form = CashContributionForm(request.POST, contribution=contribution)
         if form.is_valid():
             cash = form.save(commit=False)
             cash.contribution = contribution
             cash.ref_no = ref_no(CashContribution)
-            cash.received_by = Member.objects.first()
+            cash.received_by = request.user
             cash.save()
 
             contribution.balance = contribution.balance + cash.amount
@@ -128,7 +127,7 @@ def add_cash_contribution(request, *args, **kwargs):
         else:
             print(form.errors)
     else:
-        form = CashContributionForm()
+        form = CashContributionForm(contribution=contribution)
 
     return redirect('finance:view_contribution', contribution.id)
 
@@ -192,7 +191,6 @@ def activate_offering_divisions(request, *args, **kwargs):
     division.save()
     return redirect('finance:list_offering_divisions')
        
-@login_required(login_url='accounts:login')
 def offering_division(amount,percent):
     new_amount= (amount*percent)/100
     return new_amount
@@ -286,7 +284,6 @@ def expense_category_updates(request, id):
     cat_id = get_object_or_404(ExpenseCategory,pk=id)
 
     
-
     #Instantiate the form
     form = ExpenseCategoryForm(request.POST or None, instance=cat_id)
 
@@ -311,8 +308,6 @@ def expense_category_updates(request, id):
     }            
 
     return render(request, template, context)    
-
-
 
 
 @login_required(login_url='accounts:login')
@@ -365,7 +360,6 @@ def update_expense_categoryname(request, id):
     name_id = get_object_or_404(ExpenseName,pk=id)
 
     
-
     #Instantiate the form
     form = ExpenseNameForm(request.POST or None, instance=name_id)
 
@@ -392,9 +386,6 @@ def update_expense_categoryname(request, id):
     return render(request, template, context)       
 
 
-
-
-
 @login_required(login_url='accounts:login')
 def expense(request):
     template = 'expense/listexpense.html'
@@ -412,6 +403,8 @@ def expense(request):
         if form.is_valid():
             expense_obj = form.save(commit=False)
             expense_obj.save()
+            credit_cash_account(
+                Object=expense_obj, amount=expense_obj.amount, description="Expense added")
             messages.success(request,"Expense Recorded Successfully")
             return redirect('finance:expense')
         else:
@@ -558,6 +551,8 @@ def deposit(request):
             deposit_obj = form.save(commit=False)
             deposit_obj.depositor = request.user
             deposit_obj.save()
+            debit_cash_account(
+                Object=deposit_obj, amount=deposit_obj.amount, description="Deposit added")
             messages.success(request,"Deposit Recorded Successfully")
             return redirect('finance:deposit')
         else:
@@ -631,7 +626,6 @@ def list_cash_accounts(request):
     return render(request, template, context)
 
 
-@login_required(login_url='accounts:login')
 def debit_cash_account(Object, amount, description: str):
     # Object is a content_object
     # Get first cash account object
@@ -644,87 +638,39 @@ def debit_cash_account(Object, amount, description: str):
         CashAccount), description=description, debit=amount, balance=new_balance)
 
 
-@login_required(login_url='accounts:login')
-def credit_cash_account(Object, description: str):
+def credit_cash_account(Object, amount,description: str):
     # Object is a content_object 
     # Get first cash account object
     cash = CashAccount.objects.first()
     # Get last balance
     last_balance = cash.balance if cash else Decimal(0.0)
-    new_balance = last_balance - Decimal(Object.amount)
+    new_balance = last_balance - Decimal(amount)
 
     CashAccount.objects.create(content_object=Object, ref_no=ref_no(
-        CashAccount), description=description, credit=Object.amount, balance=new_balance)            
-
+        CashAccount), description=description, credit=amount, balance=new_balance)            
 
 
 @login_required(login_url='accounts:login')
 def expense_debit(request, id):
-    
-    debit = get_object_or_404(Expense,pk=id)
+
+    debit = get_object_or_404(Expense, pk=id)
     credit_cash_account(
-                Object=debit, amount=debit.amount, description="Cash Expense withdrawn")
+        Object=debit, amount=debit.amount, description="Cash Expense withdrawn")
     debit.is_debited = True
     debit.save()
-    messages.success(request,"The amount "+ str(debit.amount) +" is successfully debited from the Account")
+    messages.success(request, "The amount " + str(debit.amount) +
+                     " is successfully debited from the Account")
     return redirect('finance:expense')
-
-
-    # if balance.balance > 0:
-    #     if debit.is_debited == False:
-
-    #         if balance.balance >= debit.amount:
-    #             balance.balance = balance.balance - debit.amount
-    #             balance.save()
-    #             debit.is_debited = True
-    #             debit.save()
-    #             messages.success(request,"The amount "+ str(debit.amount) +" is successfully debited from the Account")
-    #             return redirect('finance:expense')
-    #         else:  
-    #             messages.error(request,"Excuse the account balance is insufficient to debit "+ str(debit.amount))  
-    #             return redirect('finance:expense')
-    #     else:
-    #         messages.error(request,"This amount already debited")
-    #         return redirect('finance:expense')
-
-    # else:
-    #     messages.error(request,"Excuse the account balance is "+str(balance.balance))  
-    #     return redirect('finance:expense')
 
 
 @login_required(login_url='accounts:login')
 def deposit_credit(request, id):
-   
-    credit = get_object_or_404(Deposit,pk=id)
+
+    credit = get_object_or_404(Deposit, pk=id)
     debit_cash_account(
-                Object=credit, amount=credit.amount, description="Cash added")
-    credit.is_credited = True   
-    credit.save()   
-    messages.success(request,"The amount "+ str(credit.amount) +" is successfully credited to the Account")
-    return redirect('finance:deposit')      
-
-    # if balance.balance >= 0:
-    #     if credit.is_credited == False:
-
-    #         balance.balance = balance.balance + credit.amount
-    #         balance.save()
-    #         credit.is_credited = True
-    #         credit.save()
-    #         messages.success(request,"The amount "+ str(credit.amount) +" is successfully credited to the Account")
-    #         return redirect('finance:deposit')
-    #     else:
-    #         messages.error(request,"This amount already credited")
-    #         return redirect('finance:deposit')
-
- 
-    # else:
-    #     messages.error(request,"Something Wrong ") 
-    #     return redirect('finance:deposit')
-
-
-
-    
-
-        
-
-
+        Object=credit, amount=credit.amount, description="Cash added")
+    credit.is_credited = True
+    credit.save()
+    messages.success(request, "The amount " + str(credit.amount) +
+                     " is successfully credited to the Account")
+    return redirect('finance:deposit')
