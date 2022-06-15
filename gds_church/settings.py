@@ -43,12 +43,13 @@ INSTALLED_APPS = [
     # My Apps
     'dashboard',
     'membership',
-
     'files',
     'accounts',
     'finance',
+    
     # Installed Apps
     'widget_tweaks',
+    'mathfilters',
 
 ]
 

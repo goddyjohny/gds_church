@@ -1,8 +1,5 @@
 from django.urls import path
-
 from . import views
-
-from . import views 
 
 
 app_name = 'finance'
@@ -32,9 +29,6 @@ urlpatterns = [
 
 
 
-
-
-
     path("list/cash/accounts", views.list_cash_accounts, name="list_cash_accounts"),
     path("list/contributions",
          views.list_contributions, name="list_contributions"),
@@ -52,7 +46,5 @@ urlpatterns = [
          views.list_offerings, name="list_offerings"),
     path("activate/offering/divisions/<int:id>",
          views.activate_offering_divisions, name="activate_offering_divisions"),
-
-    
 
 ]

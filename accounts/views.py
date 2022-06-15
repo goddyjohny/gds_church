@@ -25,14 +25,14 @@ def userlogin(request):
 
         """Checking if user is existing and is staff"""
         if user is not None:
-            if user.is_staff:
+            # if user.is_staff:
                 """allow user to login and redirect to dashboard"""
                 login(request, user)
                 return redirect('dashboard:index')
-            else:
-                """if user is not staff"""
-                messages.error(request, 'Sorry Only Staff can get access')
-                return redirect('accounts:login')
+            # else:
+            #     """if user is not staff"""
+            #     messages.error(request, 'Sorry Only Staff can get access')
+            #     return redirect('accounts:login')
 
         else:
 
