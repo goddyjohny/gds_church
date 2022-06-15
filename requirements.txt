@@ -1,1 +1,8 @@
 Django==3.2
+<<<<<<< HEAD
+=======
+django-widget-tweaks==1.4.12
+pytz==2022.1
+sqlparse==0.4.2
+django-mathfilters
+>>>>>>> 1f66cf0ed9aff9fa48ffed6a207751508bd23443
