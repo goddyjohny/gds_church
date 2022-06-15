@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load widget_tweaks %}
 {% load humanize %}
+{% load mathfilters %}
 
 {% block content %}
 <!-- start page title -->
@@ -18,8 +19,10 @@
 <div class="row">
     <div class="col-md-6 col-xl-3">
         <div class="card card-body">
-            <h5 class="card-title">{{contribution.name}}</h5>
-            <p class="card-text">{{contribution.description}}</p>
+            <h4 class="card-title">{{contribution.name}}</h4>
+            <div style="min-height: 65px;">
+                <p class="card-text">{{contribution.description}}</p>
+            </div>
             <p class="card-text">
                 <small class="text-muted">{{contribution.created_at}}</small>
             </p>
@@ -28,16 +31,16 @@
     <div class="col-md-6 col-xl-3">
         <div class="card" id="tooltip-container">
             <div class="card-body">
-                <i class="fa fa-info-circle text-muted float-end" data-bs-container="#tooltip-container"
+                <!-- <i class="fa fa-info-circle text-muted float-end" data-bs-container="#tooltip-container"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="More Info"
-                    aria-label="More Info"></i>
+                    aria-label="More Info"></i> -->
                 <h4 class="mt-0 font-16">Income Status</h4>
                 <h2 class="text-primary my-3 text-center">TZS <span
                         data-plugin="counterup">{{contribution.balance|intcomma}}</span></h2>
                 <p class="text-muted mb-0">Total income: {{contribution.cash.all.count}}
                     <!-- <span class="float-end"><i
                             class="fa fa-caret-up text-success me-1"></i>10.25%</span> -->
-                        </p>
+                </p>
             </div>
         </div>
     </div>
@@ -45,16 +48,16 @@
     <div class="col-md-6 col-xl-3">
         <div class="card" id="tooltip-container1">
             <div class="card-body">
-                <i class="fa fa-info-circle text-muted float-end" data-bs-container="#tooltip-container1"
+                <!-- <i class="fa fa-info-circle text-muted float-end" data-bs-container="#tooltip-container1"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="More Info"
-                    aria-label="More Info"></i>
+                    aria-label="More Info"></i> -->
                 <h4 class="mt-0 font-16">Pledge Status</h4>
                 <h2 class="text-primary my-3 text-center"><span
                         data-plugin="counterup">{{contribution.pledge.all.count}}</span></h2>
-                <p class="text-muted mb-0">Total pledge: {{contribution.pledge.all.count}} 
+                <p class="text-muted mb-0">Total pledge: {{contribution.pledge.all.count}}
                     <!-- <span class="float-end"><i
                             class="fa fa-caret-down text-danger me-1"></i>7.85%</span> -->
-                        </p>
+                </p>
             </div>
         </div>
     </div>
@@ -62,19 +65,21 @@
     <div class="col-md-6 col-xl-3">
         <div class="card" id="tooltip-container2">
             <div class="card-body">
-                <i class="fa fa-info-circle text-muted float-end" data-bs-container="#tooltip-container2"
+                <!-- <i class="fa fa-info-circle text-muted float-end" data-bs-container="#tooltip-container2"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="More Info"
-                    aria-label="More Info"></i>
+                    aria-label="More Info"></i> -->
                 <h4 class="mt-0 font-16">Objective</h4>
-                <h2 class="text-primary my-3 text-center"><span
+                <h2 class="text-primary my-3 text-center">TZS <span
                         data-plugin="counterup">{{contribution.objective|intcomma}}</span></h2>
-                <p class="text-muted mb-0">Total users: 121 M <span class="float-end"><i
-                            class="fa fa-caret-up text-success me-1"></i>3.64%</span></p>
+                <p class="text-muted mb-0">Remaining: {{contribution.objective|sub:contribution.balance|intcomma}}
+                    <!-- <span class="float-end"><i
+                            class="fa fa-caret-up text-success me-1"></i>3.64%</span> -->
+                </p>
             </div>
         </div>
     </div>
 
-   
+
 </div>
 
 <div class="row">
@@ -181,9 +186,9 @@
                             <td>{{cont.received_by}}</td>
                             <td>{{cont.created_at}}</td>
                             <td>
-                                <a href="" class="waves-effect waves-light text-danger">
-                                   <i class="fas fa-trash-alt"></i>
-                                </a>
+                                <!-- <a href="" class="waves-effect waves-light text-danger">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a> -->
                             </td>
                         </tr>
                         {% endfor %}
@@ -288,9 +293,9 @@
                             <td>{{cont.completed}}</td>
                             <td>{{cont.created_at}}</td>
                             <td>
-                                <a href="" class="waves-effect waves-light text-danger">
-                                   <i class="fas fa-trash-alt"></i>
-                                </a>
+                                <!-- <a href="" class="waves-effect waves-light text-danger">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a> -->
                             </td>
                         </tr>
                         {% endfor %}

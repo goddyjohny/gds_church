@@ -73,32 +73,16 @@
                                             <td>{{data.depositor}}</td>
                                             <td>{{data.created_at}}</td>
 
-                                            {% if data.is_credited == True %}
 
                                             <td>
-                                                <a href="{% url 'finance:update-deposit' data.id %}" class="jsgrid-button jsgrid-edit-button" type="button" style="pointer-events: none"><i
-                                                        class="fe-edit"></i></a>
-                                            
-                                                <a href="{% url 'finance:credit-account' data.id %}" class="jsgrid-button jsgrid-edit-button"
-                                                    type="button" style="pointer-events: none">credit</a>
-                                            
-                                            
+                                                <!-- <a href="{% url 'finance:update-deposit' data.id %}" class="jsgrid-button jsgrid-edit-button" type="button" style="pointer-events: none"><i
+                                                        class="fe-edit"></i></a> -->
+                                             <!-- <a href="" class="waves-effect waves-light text-danger">
+                                                 <i class="fas fa-trash-alt"></i>
+                                             </a> -->
                                             </td>
                                               
-                                            {% else %}
-
-                                            <td>
-                                                <a href="{% url 'finance:update-deposit' data.id %}" class="jsgrid-button jsgrid-edit-button" type="button"><i
-                                                        class="fe-edit"></i></a>
-                                            
-                                                <a href="{% url 'finance:credit-account' data.id %}" class="jsgrid-button jsgrid-edit-button"
-                                                    type="button">credit</a>
-                                            
-                                            
-                                            </td>
-                                              
-                                            {% endif %}
-                                            
+                                           
                                             
 
                                         </tr>

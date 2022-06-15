@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,17 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.humanize',
-
     # My Apps
     'dashboard',
     'membership',
-
-    'files',
-    'accounts',
-    'finance',
-    # Installed Apps
-    'widget_tweaks',
 
 ]
 
@@ -124,11 +115,6 @@ TIME_ZONE = 'Africa/Dar_es_Salaam'
 USE_I18N = True
 
 USE_TZ = False
-
-
-MESSAGE_TAGS = {
-    messages.ERROR: "danger"
-}
 
 
 # Static files (CSS, JavaScript, Images)

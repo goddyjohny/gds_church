@@ -20,16 +20,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('dashboard/', include('dashboard.urls', namespace='dashboard')),
-    path('membership/', include('membership.urls', namespace='membership')),
-
-    path('files/', include('files.urls', namespace='files')),
-    path('', include('accounts.urls', namespace='accounts')),
-    path('finance/', include('finance.urls', namespace='finance')),
-
-
-
-
+    path('', include('dashboard.urls', namespace='dashboard'))
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
